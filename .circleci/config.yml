@@ -7,32 +7,32 @@ version: 2.1
 orbs:
   node: circleci/node@5.1.0
 
-jobs:
-  test:
-  docker:
-    - image: cimg/base:stable
-    - steps:
-        - checkout
-        - run: echo "test test test"
-  # build:
-  #   executor: node/default # use the default executor defined within the orb
-  #   working_directory: ~/auctionapp_backed-master
-  #   steps:
-  #     - checkout #retrive the source code
-  #     - node/install-packages:
-  #         pkg-manager: npm
-  #     - run:
-  #         command: npm install
-  #         name: Build app
-  #     - run:
-  #         command: nodemon server.js
-  #         name: start server
-  #     - persist_to_workspace:
-  #         root: ~/auctionapp_backed-master
-  #         paths: .
-
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
+jobs:
+  # test:
+  # docker:
+  #   - image: cimg/base:stable
+  #   - steps:
+  #       - checkout
+  #       - run: echo "test test test"
+  build:
+    executor: node/default # use the default executor defined within the orb
+    working_directory: ~/auctionapp_backed-master
+    steps:
+      - checkout #retrive the source code
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm install
+          name: Build app
+      - run:
+          command: nodemon server.js
+          name: start server
+      - persist_to_workspace:
+          root: ~/auctionapp_backed-master
+          paths: .
+
 # jobs:
 #   say-hello:
 #     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
@@ -52,4 +52,4 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - test
+      - build
