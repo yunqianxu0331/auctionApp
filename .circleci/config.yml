@@ -14,22 +14,22 @@ jobs:
     - steps:
         - checkout
         - run: echo "test test test"
-  build:
-    executor: node/default # use the default executor defined within the orb
-    working_directory: ~/auctionapp_backed-master
-    steps:
-      - checkout #retrive the source code
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          command: npm install
-          name: Build app
-      - run:
-          command: nodemon server.js
-          name: start server
-      - persist_to_workspace:
-          root: ~/auctionapp_backed-master
-          paths: .
+  # build:
+  #   executor: node/default # use the default executor defined within the orb
+  #   working_directory: ~/auctionapp_backed-master
+  #   steps:
+  #     - checkout #retrive the source code
+  #     - node/install-packages:
+  #         pkg-manager: npm
+  #     - run:
+  #         command: npm install
+  #         name: Build app
+  #     - run:
+  #         command: nodemon server.js
+  #         name: start server
+  #     - persist_to_workspace:
+  #         root: ~/auctionapp_backed-master
+  #         paths: .
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
