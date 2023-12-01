@@ -2,25 +2,54 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+#The Node.js orb contains a set of prepackaged CircleCI configurations
+#you can use to easily install Node.js and its package managers (npm, yarn).
+orbs:
+  node: circleci/node@5.1.0
+
+jobs:
+  test:
+  docker:
+    - image: cimg/base:stable
+    - steps:
+        - checkout
+        - run: echo "test test test"
+  build:
+    executor: node/default # use the default executor defined within the orb
+    working_directory: ~/auctionapp_backed-master
+    steps:
+      - checkout #retrive the source code
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm install
+          name: Build app
+      - run:
+          command: nodemon server.js
+          name: start server
+      - persist_to_workspace:
+          root: ~/auctionapp_backed-master
+          paths: .
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+# jobs:
+#   say-hello:
+#     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
+#     # See: https://circleci.com/docs/configuration-reference/#executor-job
+#     docker:
+#       - image: cimg/base:stable
+#     # Add steps to the job
+#     # See: https://circleci.com/docs/configuration-reference/#steps
+#     steps:
+#       - checkout
+#       - run:
+#           name: "Say hello"
+#           command: "echo Hello, World!"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - test
