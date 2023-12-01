@@ -11,9 +11,7 @@ orbs:
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   build:
-    docker:
-      - image: circleci/node@5.1.0
-    # executor: node/default # use the default executor defined within the orb
+    executor: node/default # use the default executor defined within the orb
     working_directory: ../auctionapp_backed-master
     steps:
       - checkout #retrive the source code
