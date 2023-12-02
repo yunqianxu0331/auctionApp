@@ -26,6 +26,10 @@ jobs:
             - MONGO_DB_CONN: MONGO_DB_CONN #process.env.MONGO_DB_CONN
             - PORT: PORT
           command: npm start
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
       # - persist_to_workspace:
       #     root: ../auctionapp_backend-master
       #     paths: .
