@@ -12,7 +12,7 @@ orbs:
 jobs:
   build:
     executor: node/default # use the default executor defined within the orb
-    working_directory: ../auctionapp_backed-master
+    working_directory: /auctionapp_backed-master
     steps:
       - checkout #retrive the source code
       - node/install-packages:
@@ -22,9 +22,12 @@ jobs:
           command: npm install --save
       - run:
           name: start server
+          environment:
+            - MONGO_DB_CONN: MONGO_DB_CONN #process.env.MONGO_DB_CONN
+            - PORT: PORT
           command: nodemon server.js
       - persist_to_workspace:
-          root: ../auctionapp_backend-master
+          root: /auctionapp_backend-master
           paths: .
 
 # Orchestrate jobs using workflows
@@ -32,5 +35,4 @@ jobs:
 workflows:
   auction-backend-workflow:
     jobs:
-      - build:
-        context: "ENV"
+      - build
