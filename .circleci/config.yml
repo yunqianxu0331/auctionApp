@@ -33,4 +33,4 @@ workflows:
   auction-backend-workflow:
     jobs:
       - build:
-        context: ENV
+        context: "ENV"
