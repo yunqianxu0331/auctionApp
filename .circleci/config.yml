@@ -30,6 +30,7 @@ jobs:
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  auction-backend-workflow:
     jobs:
-      - build
+      - build:
+        context: ENV

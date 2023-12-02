@@ -1,7 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/connectDB');
 
-// connectDB();
+connectDB();
 const app = express();
 app.use(express.json());//****important for post */ allow u pass json information from the body by a formed post
 
