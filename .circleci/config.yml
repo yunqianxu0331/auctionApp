@@ -26,7 +26,7 @@ jobs:
           environment:
             - MONGO_DB_CONN: MONGO_DB_CONN #process.env.MONGO_DB_CONN
             - PORT: PORT
-          command: npm start          
+          command: npm start
       - persist_to_workspace:
           root: ~/project
           paths: .
@@ -36,7 +36,7 @@ jobs:
         - attach_workspace:
             at: ~/project
         - heroku/deploy-via-git:
-            force: true # force push when pushing to the heroku remote, see: 
+            force: true # force push when pushing to the heroku remote, see:
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -46,7 +46,7 @@ workflows:
       - build
       - deploy:
           requires:
-            - build
+            - build # only deploy if the build_and_test job has completed
           filters:
             branches:
               only: circleci-project-setup
