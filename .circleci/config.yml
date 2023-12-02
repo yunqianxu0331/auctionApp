@@ -2,8 +2,8 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-#The Node.js orb contains a set of prepackaged CircleCI configurations
-#you can use to easily install Node.js and its package managers (npm, yarn).
+# The Node.js orb contains a set of prepackaged CircleCI configurations
+# you can use to easily install Node.js and its package managers (npm, yarn).
 orbs:
   node: circleci/node@5.1.0
   heroku: circleci/heroku@1.2.6
@@ -13,40 +13,41 @@ orbs:
 jobs:
   build:
     executor: node/default # use the default executor defined within the orb
-    # working_directory: ../auctionapp_backed-master
     steps:
-      - checkout #retrive the source code
+      - checkout # retrieve the source code
       - node/install-packages:
           pkg-manager: npm
       - run:
           name: Build app
           command: npm install --save
       - run:
-          name: start server
+          name: Start server
           environment:
-            - MONGO_DB_CONN: MONGO_DB_CONN #process.env.MONGO_DB_CONN
+            - MONGO_DB_CONN: MONGO_DB_CONN
             - PORT: PORT
           command: npm start
       - persist_to_workspace:
           root: ~/project
-          paths: .
-    deploy: # this can be any name you choose
-      executor: heroku/default
-      steps:
-        - attach_workspace:
-            at: ~/project
-        - heroku/deploy-via-git:
-            force: true # force push when pushing to the heroku remote, see:
+          paths: . # Persist the entire current directory to the workspace.
+
+  deploy: # This can be any name you choose
+    executor: heroku/default
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - heroku/deploy-via-git:
+          force: true # Force push when pushing to the Heroku remote.
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
+  version: 2
   auction-backend-workflow:
     jobs:
       - build
       - deploy:
           requires:
-            - build # only deploy if the build_and_test job has completed
+            - build
           filters:
             branches:
-              only: circleci-project-setup
+              only: circleci-project-setup # Trigger only on the "circleci-project-setup" branch.
