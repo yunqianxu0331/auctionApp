@@ -37,10 +37,10 @@ router.get('/:id', async (req, res) => {
 //Access: public
 router.post('/', async (req, res) => {
     try {
-        const newAuction = await await Auction.create({
+        const newAuction = await Auction.create({
             name: req.body.name,
             city: req.body.city,
-            end_time: req.body.end_time,
+            end_time: Date.now(),
             status: true,
         })
         console.log('new Aution created: ', newAuction);

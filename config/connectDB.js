@@ -4,7 +4,7 @@ const dotenv = require('dotenv').config();
 const connectDB = async () => {
     try {
         // await mongoose.connect(process.env.MONGO_DB_CONN);
-        await mongoose.connect('mongodb+srv://yunqianxu:n01392662@auctiondatabase.hd1nbov.mongodb.net/auctiondatabase?retryWrites=true&w=majority');
+        await mongoose.connect(process.env.MONGO_DB_CONN);
         console.log('Database Connected');
 
     } catch (err) {

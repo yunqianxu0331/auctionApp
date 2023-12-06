@@ -6,7 +6,7 @@ let auctionLastDays = 10;
 
 const auctionSchema = Schema({
     name: { type: String, require: [true, 'Auction must has a Name'] },
-    city: { type: String, require: [true, 'Auction must has a location'], default: 'Toronto' },
+    city: { type: String, require: [true, 'Auction must has a location'] },
     end_time: { type: Date, require: true, default: Date.now() + (24 * 60 * 60 * 1000 * auctionLastDays) },
     status: { type: Boolean, require: true, default: true }
 });
